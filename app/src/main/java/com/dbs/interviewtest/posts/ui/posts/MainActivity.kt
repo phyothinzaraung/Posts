@@ -6,7 +6,6 @@ import android.view.View
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -21,8 +20,6 @@ class MainActivity : AppCompatActivity() {
 
     private val mainViewModel: MainViewModel by viewModels()
     private lateinit var adapter: MainAdapter
-    private var randomNumbers: ArrayList<String> = arrayListOf()
-    private var postListSize: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,8 +63,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupObserver(){
-        mainViewModel.posts.observe(this, Observer {
-            when (it.status){
+        mainViewModel.posts.observe(this) {
+            when (it.status) {
                 Status.SUCCESS -> {
                     progressBar.visibility = View.GONE
                     it.data?.let { posts -> renderList(posts) }
@@ -82,15 +79,11 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
                 }
             }
-        })
+        }
     }
 
     private fun renderList(posts: List<Post>){
-        var postList = ArrayList<Post>()
-        repeat(3){
-            postList.addAll(posts)
-        }
-        adapter.addData(postList)
+        adapter.addData(posts)
     }
 
 }

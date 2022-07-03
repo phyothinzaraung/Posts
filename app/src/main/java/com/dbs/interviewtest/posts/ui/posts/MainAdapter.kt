@@ -1,7 +1,7 @@
 package com.dbs.interviewtest.posts.ui.posts
 
 import android.annotation.SuppressLint
-import android.text.Html
+import android.text.Html.fromHtml
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,9 +26,9 @@ class MainAdapter(
             fun bind(post: Post){
                 itemView.txtID.text = post.id.toString() + ": "
                 itemView.txtTitle.text = post.title
-                var randomNumber = (10000000000..90000000000).random()
+                val randomNumber = (10000000000..90000000000).random()
                 val bodyText = post.body + "<b>" +  " - <br> $randomNumber </br>" + "</b>"
-                itemView.txtBody.text = Html.fromHtml(bodyText)
+                itemView.txtBody.text = fromHtml(bodyText)
             }
         }
 
@@ -44,6 +44,7 @@ class MainAdapter(
 
     override fun getItemCount(): Int = filterPostList.size
 
+    @SuppressLint("NotifyDataSetChanged")
     fun addData(postList: List<Post>){
         posts.addAll(postList)
         filterPostList.addAll(postList)
