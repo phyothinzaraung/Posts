@@ -61,8 +61,7 @@ class MainActivity : AppCompatActivity() {
         })
 
         buttonRender.setOnClickListener {
-            randomNumbers.clear()
-            setupObserver()
+            adapter.notifyDataSetChanged()
         }
     }
 
@@ -87,21 +86,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun renderList(posts: List<Post>){
-//        var postList = ArrayList<Post>()
-//        repeat(2){
-//            postList.addAll(posts)
-//        }
-        postListSize = posts.size
-        generateRandomNumber(postListSize)
-        adapter.addData(posts, randomNumbers)
-
-        //adapter.notifyDataSetChanged()
-    }
-
-    private fun generateRandomNumber(size: Int){
-        for (i in 1..size){
-            val randomNumber = (1000000000..9000000000).random()
-            randomNumbers.add(randomNumber.toString())
+        var postList = ArrayList<Post>()
+        repeat(3){
+            postList.addAll(posts)
         }
+        adapter.addData(postList)
     }
+
 }

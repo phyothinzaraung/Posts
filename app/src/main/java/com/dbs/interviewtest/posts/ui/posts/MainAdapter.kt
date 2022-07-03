@@ -20,14 +20,13 @@ class MainAdapter(
     Filterable {
 
     private var filterPostList = arrayListOf<Post>()
-    private var randomNumbers = arrayListOf<String>()
 
     class MainViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
             @SuppressLint("SetTextI18n")
-            fun bind(post: Post, randomNumber: String){
+            fun bind(post: Post){
                 itemView.txtID.text = post.id.toString() + ": "
                 itemView.txtTitle.text = post.title
-                //var randomNumber = (10000000000..90000000000).random()
+                var randomNumber = (10000000000..90000000000).random()
                 val bodyText = post.body + "<b>" +  " - <br> $randomNumber </br>" + "</b>"
                 itemView.txtBody.text = Html.fromHtml(bodyText)
             }
@@ -40,15 +39,14 @@ class MainAdapter(
     }
 
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
-        holder.bind(filterPostList[position], randomNumbers[position])
+        holder.bind(filterPostList[position])
     }
 
     override fun getItemCount(): Int = filterPostList.size
 
-    fun addData(postList: List<Post>, randomNumberList: List<String>){
+    fun addData(postList: List<Post>){
         posts.addAll(postList)
         filterPostList.addAll(postList)
-        randomNumbers.addAll(randomNumberList)
         notifyDataSetChanged()
     }
 

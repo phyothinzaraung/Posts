@@ -9,6 +9,8 @@ import com.dbs.interviewtest.posts.data.repository.MainRepository
 import com.dbs.interviewtest.posts.utils.NetworkHelper
 import com.dbs.interviewtest.posts.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -27,7 +29,7 @@ class MainViewModel @Inject constructor(
     }
 
     private fun fetchPosts(){
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.Default) {
             _post.postValue(Resource.loading(null))
             if (networkHelper.isNetworkConnected()){
                 mainRepository.getPosts().let {
